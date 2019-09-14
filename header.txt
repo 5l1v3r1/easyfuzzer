@@ -1,0 +1,14 @@
+__FUZZ__{GET#_ALL_} __FUZZ__{/#_ALL_} __FUZZ__{HTTP/1.0#HTTP/0.9#HTTP/1.9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999#_ALL_}
+Host: __FUZZ__{_HOST_#_ALL_}
+User-Agent: __FUZZ__{Mozilla/5.0#_ALL_} (__FUZZ__{X11; U; Linux i686; en-US; rv:1.7.6#_ALL_}) Gecko/20050311 Firefox/1.0.1
+Accept: text/__FUZZ__{xml#_ALL_},__FUZZ__{application#_ALL_}/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.__FUZZ__{5#_ALL_}
+Accept-Language: en-us,__FUZZ__{en#_ALL_}
+Accept-Charset: ISO-8859-1,__FUZZ__{utf-8#_ALL_}
+Connection: __FUZZ__{Close#_ALL_}
+Referer: __FUZZ__{http://_HOST_:_PORT_/#_ALL_}
+Cookie: __FUZZ__{customerId=BP-360018555#_ALL_}
+Cookie: JSESSIONID=__FUZZ__{0101010101010101010101010101010101#_ALL_}
+Cookie: __FUZZ__{Sessionid#_ALL_}=123
+__FUZZ__{X-Info#_ALL_}: Test
+X-Test: __FUZZ__{Test#_ALL_}
+

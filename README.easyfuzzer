@@ -1,0 +1,92 @@
+Easyfuzzer Documentation
+========================
+
+NOTE: Not for public distribution!
+
+
+Installation
+------------
+bash and perl should be installed in the usual paths.
+copy all files somewhere into your execution path (e.g. /usr/local/bin)
+
+
+
+The Files
+---------
+ - EASYFUZER -
+easyfuzzer.pl		- fuzzes the requests. the main tool.
+easyfuzzer-{TOOL}-watcher.sh - Run this watcher when running {TOOL} web proxy.
+			  it will run fuzzing on all seen web requests!
+			  {TOOL} is currently only webscarab
+prepare4easyfuzzer.pl	- Helper: Give it an request input file, and it
+			  strips all proxy, http/1.1 etc. With extra options
+			  it puts fuzz statements to all GET/POST parameters,
+			  and with an additional option also to Cookies
+easyfuzzer-wsdl-url.sh	- Hand over an WSDL URL, does all the rest
+wsdl2request.pl		- Helper: Converts an WSDL output to easy/sql-fuzzer 
+			  format. Will generate one file for each function.
+wbxml2request.pl	- Helper: Converts an WBXML output to easy/sql-fuzzer
+			  format
+easyfuzzer-diff.sh	- Helper: runs a diff on the fuzzed output files, after
+			  performing MD5 checksums on cleaned output. HTML.
+			  Run it after easyfuzzer.pl
+ (easyfuzzer-proxy.pl)	- internally used between easyfuzzer-*-watcher.* and 
+			  easyfuzzer.pl. Ignore it.
+
+
+
+How-to-use
+----------
+
+easyfuzzer.pl :
+
+easyfuzzer.pl [-X] [-s] fuzz-template.txt TARGET PORT
+If you are attacking a web application, use -X. If SSL, use -s.
+For help on how to create a fuzz-template, run "easyfuzzer.pl -F" for lots
+of examples.
+
+
+easyfuzzer-webscarab-watcher.sh :
+
+easyfuzzer-webscarab-watcher.sh [-a] TARGET WEBSCARAB_DIRECTORY
+Just set TARGET to the host/domain you are attacking (e.g. web.de), and
+WEBSCARAB_DIRECTORY to the directory where the webscarab data lies.
+In normal mode, for every *NEW* requests which are saved by webscarab after
+starting this script are then checked if it is against TARGET, if yes, it
+checks if it is a GET or POST request with parameters, if yes it checks
+if the URI was not fuzzed already (case insensitive check) and only if all
+checks are true it runs it through prepare4easyfuzzer and then to
+easyfuzzer.pl and finally easyfuzzer-diff in the background.
+In case you want to fuzz also already seen requests (e.g. data from a saved
+webscarab session), just use the "-a" option.
+NOTE: all data is written to /tmp/easyfuzzer/...
+
+
+easyfuzzer-diff.sh :
+
+easyfuzzer-diff.sh fuzz-template.txt
+Just point it to the template file, and it will diff all related responses.
+It creates a diff for every response, and also a complete summary in
+"fuzz-template.txt.diff".
+
+
+prepare4easyfuzzer.pl :
+
+prepare4easyfuzzer.pl [-f] [-c] infile outfile
+this tools takes the infile, removes proxy, http/1.1, etc. statements,
+trims to \r\n format, etc. and creates an outfile which can be used
+with netcat which can be sent directly to the target.
+With the -f options, all parameters (from GET/POST) gets a __FUZZ__
+statement set with _ALL_. With the -c option, all cookies are fuzzed with
+_ALL_ as well. After it you can run it with easyfuzzer.pl
+
+
+easyfuzzer-proxy.pl
+
+you do not run it yourself, ignore it.
+
+
+Bugfixes, Patches, Features
+---------------------------
+
+send to mh@mh-sec.de
